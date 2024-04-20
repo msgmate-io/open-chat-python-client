@@ -3,8 +3,6 @@ from typing import Any, Dict, List, Type, TypeVar
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-from ..types import Unset
-
 T = TypeVar("T", bound="LoginInfo")
 
 
@@ -27,28 +25,6 @@ class LoginInfo:
 
         field_dict: Dict[str, Any] = {}
         field_dict.update(self.additional_properties)
-        field_dict.update(
-            {
-                "username": username,
-                "password": password,
-            }
-        )
-
-        return field_dict
-
-    def to_multipart(self) -> Dict[str, Any]:
-        username = (
-            self.username if isinstance(self.username, Unset) else (None, str(self.username).encode(), "text/plain")
-        )
-
-        password = (
-            self.password if isinstance(self.password, Unset) else (None, str(self.password).encode(), "text/plain")
-        )
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(
-            {key: (None, str(value).encode(), "text/plain") for key, value in self.additional_properties.items()}
-        )
         field_dict.update(
             {
                 "username": username,

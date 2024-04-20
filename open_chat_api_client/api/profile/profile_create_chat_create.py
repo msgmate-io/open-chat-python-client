@@ -13,11 +13,7 @@ from ...types import UNSET, Response, Unset
 def _get_kwargs(
     user_uuid: str,
     *,
-    body: Union[
-        SendMessage,
-        SendMessage,
-        SendMessage,
-    ],
+    body: SendMessage,
     contact_secret: Union[Unset, str] = UNSET,
     reveal_secret: Union[Unset, str] = UNSET,
 ) -> Dict[str, Any]:
@@ -37,21 +33,10 @@ def _get_kwargs(
         "params": params,
     }
 
-    if isinstance(body, SendMessage):
-        _json_body = body.to_dict()
+    _body = body.to_dict()
 
-        _kwargs["json"] = _json_body
-        headers["Content-Type"] = "application/json"
-    if isinstance(body, SendMessage):
-        _data_body = body.to_dict()
-
-        _kwargs["data"] = _data_body
-        headers["Content-Type"] = "application/x-www-form-urlencoded"
-    if isinstance(body, SendMessage):
-        _files_body = body.to_multipart()
-
-        _kwargs["files"] = _files_body
-        headers["Content-Type"] = "multipart/form-data"
+    _kwargs["json"] = _body
+    headers["Content-Type"] = "application/json"
 
     _kwargs["headers"] = headers
     return _kwargs
@@ -85,11 +70,7 @@ def sync_detailed(
     user_uuid: str,
     *,
     client: AuthenticatedClient,
-    body: Union[
-        SendMessage,
-        SendMessage,
-        SendMessage,
-    ],
+    body: SendMessage,
     contact_secret: Union[Unset, str] = UNSET,
     reveal_secret: Union[Unset, str] = UNSET,
 ) -> Response[ChatCreationResponse]:
@@ -98,8 +79,6 @@ def sync_detailed(
         user_uuid (str):
         contact_secret (Union[Unset, str]):
         reveal_secret (Union[Unset, str]):
-        body (SendMessage):
-        body (SendMessage):
         body (SendMessage):
 
     Raises:
@@ -128,11 +107,7 @@ def sync(
     user_uuid: str,
     *,
     client: AuthenticatedClient,
-    body: Union[
-        SendMessage,
-        SendMessage,
-        SendMessage,
-    ],
+    body: SendMessage,
     contact_secret: Union[Unset, str] = UNSET,
     reveal_secret: Union[Unset, str] = UNSET,
 ) -> Optional[ChatCreationResponse]:
@@ -141,8 +116,6 @@ def sync(
         user_uuid (str):
         contact_secret (Union[Unset, str]):
         reveal_secret (Union[Unset, str]):
-        body (SendMessage):
-        body (SendMessage):
         body (SendMessage):
 
     Raises:
@@ -166,11 +139,7 @@ async def asyncio_detailed(
     user_uuid: str,
     *,
     client: AuthenticatedClient,
-    body: Union[
-        SendMessage,
-        SendMessage,
-        SendMessage,
-    ],
+    body: SendMessage,
     contact_secret: Union[Unset, str] = UNSET,
     reveal_secret: Union[Unset, str] = UNSET,
 ) -> Response[ChatCreationResponse]:
@@ -179,8 +148,6 @@ async def asyncio_detailed(
         user_uuid (str):
         contact_secret (Union[Unset, str]):
         reveal_secret (Union[Unset, str]):
-        body (SendMessage):
-        body (SendMessage):
         body (SendMessage):
 
     Raises:
@@ -207,11 +174,7 @@ async def asyncio(
     user_uuid: str,
     *,
     client: AuthenticatedClient,
-    body: Union[
-        SendMessage,
-        SendMessage,
-        SendMessage,
-    ],
+    body: SendMessage,
     contact_secret: Union[Unset, str] = UNSET,
     reveal_secret: Union[Unset, str] = UNSET,
 ) -> Optional[ChatCreationResponse]:
@@ -220,8 +183,6 @@ async def asyncio(
         user_uuid (str):
         contact_secret (Union[Unset, str]):
         reveal_secret (Union[Unset, str]):
-        body (SendMessage):
-        body (SendMessage):
         body (SendMessage):
 
     Raises:

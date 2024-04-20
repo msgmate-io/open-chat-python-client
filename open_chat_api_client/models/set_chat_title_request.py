@@ -35,23 +35,6 @@ class SetChatTitleRequest:
 
         return field_dict
 
-    def to_multipart(self) -> Dict[str, Any]:
-        title = self.title if isinstance(self.title, Unset) else (None, str(self.title).encode(), "text/plain")
-
-        config = self.config if isinstance(self.config, Unset) else (None, str(self.config).encode(), "text/plain")
-
-        field_dict: Dict[str, Any] = {}
-        field_dict.update(
-            {key: (None, str(value).encode(), "text/plain") for key, value in self.additional_properties.items()}
-        )
-        field_dict.update({})
-        if title is not UNSET:
-            field_dict["title"] = title
-        if config is not UNSET:
-            field_dict["config"] = config
-
-        return field_dict
-
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()

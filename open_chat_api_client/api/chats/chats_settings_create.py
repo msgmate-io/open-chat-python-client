@@ -13,11 +13,7 @@ from ...types import Response
 def _get_kwargs(
     chat_uuid: str,
     *,
-    body: Union[
-        SetChatTitleRequest,
-        SetChatTitleRequest,
-        SetChatTitleRequest,
-    ],
+    body: SetChatTitleRequest,
 ) -> Dict[str, Any]:
     headers: Dict[str, Any] = {}
 
@@ -26,21 +22,10 @@ def _get_kwargs(
         "url": f"/api/chats/{chat_uuid}/settings/",
     }
 
-    if isinstance(body, SetChatTitleRequest):
-        _json_body = body.to_dict()
+    _body = body.to_dict()
 
-        _kwargs["json"] = _json_body
-        headers["Content-Type"] = "application/json"
-    if isinstance(body, SetChatTitleRequest):
-        _data_body = body.to_dict()
-
-        _kwargs["data"] = _data_body
-        headers["Content-Type"] = "application/x-www-form-urlencoded"
-    if isinstance(body, SetChatTitleRequest):
-        _files_body = body.to_multipart()
-
-        _kwargs["files"] = _files_body
-        headers["Content-Type"] = "multipart/form-data"
+    _kwargs["json"] = _body
+    headers["Content-Type"] = "application/json"
 
     _kwargs["headers"] = headers
     return _kwargs
@@ -70,18 +55,12 @@ def sync_detailed(
     chat_uuid: str,
     *,
     client: AuthenticatedClient,
-    body: Union[
-        SetChatTitleRequest,
-        SetChatTitleRequest,
-        SetChatTitleRequest,
-    ],
+    body: SetChatTitleRequest,
 ) -> Response[ChatSettings]:
     """Simple Viewset for modifying user profiles
 
     Args:
         chat_uuid (str):
-        body (SetChatTitleRequest):
-        body (SetChatTitleRequest):
         body (SetChatTitleRequest):
 
     Raises:
@@ -108,18 +87,12 @@ def sync(
     chat_uuid: str,
     *,
     client: AuthenticatedClient,
-    body: Union[
-        SetChatTitleRequest,
-        SetChatTitleRequest,
-        SetChatTitleRequest,
-    ],
+    body: SetChatTitleRequest,
 ) -> Optional[ChatSettings]:
     """Simple Viewset for modifying user profiles
 
     Args:
         chat_uuid (str):
-        body (SetChatTitleRequest):
-        body (SetChatTitleRequest):
         body (SetChatTitleRequest):
 
     Raises:
@@ -141,18 +114,12 @@ async def asyncio_detailed(
     chat_uuid: str,
     *,
     client: AuthenticatedClient,
-    body: Union[
-        SetChatTitleRequest,
-        SetChatTitleRequest,
-        SetChatTitleRequest,
-    ],
+    body: SetChatTitleRequest,
 ) -> Response[ChatSettings]:
     """Simple Viewset for modifying user profiles
 
     Args:
         chat_uuid (str):
-        body (SetChatTitleRequest):
-        body (SetChatTitleRequest):
         body (SetChatTitleRequest):
 
     Raises:
@@ -177,18 +144,12 @@ async def asyncio(
     chat_uuid: str,
     *,
     client: AuthenticatedClient,
-    body: Union[
-        SetChatTitleRequest,
-        SetChatTitleRequest,
-        SetChatTitleRequest,
-    ],
+    body: SetChatTitleRequest,
 ) -> Optional[ChatSettings]:
     """Simple Viewset for modifying user profiles
 
     Args:
         chat_uuid (str):
-        body (SetChatTitleRequest):
-        body (SetChatTitleRequest):
         body (SetChatTitleRequest):
 
     Raises:
