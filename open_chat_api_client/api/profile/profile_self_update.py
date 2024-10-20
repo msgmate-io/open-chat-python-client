@@ -17,7 +17,7 @@ def _get_kwargs(
 
     _kwargs: Dict[str, Any] = {
         "method": "put",
-        "url": "/api/profile/self",
+        "url": "/api/profile/self/",
     }
 
     _body = body.to_dict()

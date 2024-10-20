@@ -5,20 +5,21 @@ import httpx
 
 from ... import errors
 from ...client import AuthenticatedClient, Client
-from ...models.login_info import LoginInfo
-from ...models.user_self import UserSelf
+from ...models.message import Message
+from ...models.send_data_message import SendDataMessage
 from ...types import Response
 
 
 def _get_kwargs(
+    chat_uuid: str,
     *,
-    body: LoginInfo,
+    body: SendDataMessage,
 ) -> Dict[str, Any]:
     headers: Dict[str, Any] = {}
 
     _kwargs: Dict[str, Any] = {
         "method": "post",
-        "url": "/api/user/login/",
+        "url": f"/api/messages/{chat_uuid}/send_data/",
     }
 
     _body = body.to_dict()
@@ -30,9 +31,9 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Optional[UserSelf]:
+def _parse_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Optional[Message]:
     if response.status_code == HTTPStatus.OK:
-        response_200 = UserSelf.from_dict(response.json())
+        response_200 = Message.from_dict(response.json())
 
         return response_200
     if client.raise_on_unexpected_status:
@@ -41,7 +42,7 @@ def _parse_response(*, client: Union[AuthenticatedClient, Client], response: htt
         return None
 
 
-def _build_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Response[UserSelf]:
+def _build_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Response[Message]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -51,23 +52,27 @@ def _build_response(*, client: Union[AuthenticatedClient, Client], response: htt
 
 
 def sync_detailed(
+    chat_uuid: str,
     *,
     client: AuthenticatedClient,
-    body: LoginInfo,
-) -> Response[UserSelf]:
-    """
+    body: SendDataMessage,
+) -> Response[Message]:
+    """Simple Viewset messages CREATE, LIST, UPDATE, DELETE
+
     Args:
-        body (LoginInfo):
+        chat_uuid (str):
+        body (SendDataMessage):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[UserSelf]
+        Response[Message]
     """
 
     kwargs = _get_kwargs(
+        chat_uuid=chat_uuid,
         body=body,
     )
 
@@ -79,46 +84,54 @@ def sync_detailed(
 
 
 def sync(
+    chat_uuid: str,
     *,
     client: AuthenticatedClient,
-    body: LoginInfo,
-) -> Optional[UserSelf]:
-    """
+    body: SendDataMessage,
+) -> Optional[Message]:
+    """Simple Viewset messages CREATE, LIST, UPDATE, DELETE
+
     Args:
-        body (LoginInfo):
+        chat_uuid (str):
+        body (SendDataMessage):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        UserSelf
+        Message
     """
 
     return sync_detailed(
+        chat_uuid=chat_uuid,
         client=client,
         body=body,
     ).parsed
 
 
 async def asyncio_detailed(
+    chat_uuid: str,
     *,
     client: AuthenticatedClient,
-    body: LoginInfo,
-) -> Response[UserSelf]:
-    """
+    body: SendDataMessage,
+) -> Response[Message]:
+    """Simple Viewset messages CREATE, LIST, UPDATE, DELETE
+
     Args:
-        body (LoginInfo):
+        chat_uuid (str):
+        body (SendDataMessage):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[UserSelf]
+        Response[Message]
     """
 
     kwargs = _get_kwargs(
+        chat_uuid=chat_uuid,
         body=body,
     )
 
@@ -128,24 +141,28 @@ async def asyncio_detailed(
 
 
 async def asyncio(
+    chat_uuid: str,
     *,
     client: AuthenticatedClient,
-    body: LoginInfo,
-) -> Optional[UserSelf]:
-    """
+    body: SendDataMessage,
+) -> Optional[Message]:
+    """Simple Viewset messages CREATE, LIST, UPDATE, DELETE
+
     Args:
-        body (LoginInfo):
+        chat_uuid (str):
+        body (SendDataMessage):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        UserSelf
+        Message
     """
 
     return (
         await asyncio_detailed(
+            chat_uuid=chat_uuid,
             client=client,
             body=body,
         )

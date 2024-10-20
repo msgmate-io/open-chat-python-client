@@ -5,34 +5,33 @@ import httpx
 
 from ... import errors
 from ...client import AuthenticatedClient, Client
-from ...models.login_info import LoginInfo
-from ...models.user_self import UserSelf
-from ...types import Response
+from ...models.user_profile import UserProfile
+from ...types import UNSET, Response, Unset
 
 
 def _get_kwargs(
+    username: str,
     *,
-    body: LoginInfo,
+    reveal_secret: Union[Unset, str] = UNSET,
 ) -> Dict[str, Any]:
-    headers: Dict[str, Any] = {}
+    params: Dict[str, Any] = {}
+
+    params["reveal_secret"] = reveal_secret
+
+    params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
     _kwargs: Dict[str, Any] = {
-        "method": "post",
-        "url": "/api/user/login/",
+        "method": "get",
+        "url": f"/api/profile/name/{username}/",
+        "params": params,
     }
 
-    _body = body.to_dict()
-
-    _kwargs["json"] = _body
-    headers["Content-Type"] = "application/json"
-
-    _kwargs["headers"] = headers
     return _kwargs
 
 
-def _parse_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Optional[UserSelf]:
+def _parse_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Optional[UserProfile]:
     if response.status_code == HTTPStatus.OK:
-        response_200 = UserSelf.from_dict(response.json())
+        response_200 = UserProfile.from_dict(response.json())
 
         return response_200
     if client.raise_on_unexpected_status:
@@ -41,7 +40,7 @@ def _parse_response(*, client: Union[AuthenticatedClient, Client], response: htt
         return None
 
 
-def _build_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Response[UserSelf]:
+def _build_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Response[UserProfile]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -51,24 +50,27 @@ def _build_response(*, client: Union[AuthenticatedClient, Client], response: htt
 
 
 def sync_detailed(
+    username: str,
     *,
     client: AuthenticatedClient,
-    body: LoginInfo,
-) -> Response[UserSelf]:
+    reveal_secret: Union[Unset, str] = UNSET,
+) -> Response[UserProfile]:
     """
     Args:
-        body (LoginInfo):
+        username (str):
+        reveal_secret (Union[Unset, str]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[UserSelf]
+        Response[UserProfile]
     """
 
     kwargs = _get_kwargs(
-        body=body,
+        username=username,
+        reveal_secret=reveal_secret,
     )
 
     response = client.get_httpx_client().request(
@@ -79,47 +81,53 @@ def sync_detailed(
 
 
 def sync(
+    username: str,
     *,
     client: AuthenticatedClient,
-    body: LoginInfo,
-) -> Optional[UserSelf]:
+    reveal_secret: Union[Unset, str] = UNSET,
+) -> Optional[UserProfile]:
     """
     Args:
-        body (LoginInfo):
+        username (str):
+        reveal_secret (Union[Unset, str]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        UserSelf
+        UserProfile
     """
 
     return sync_detailed(
+        username=username,
         client=client,
-        body=body,
+        reveal_secret=reveal_secret,
     ).parsed
 
 
 async def asyncio_detailed(
+    username: str,
     *,
     client: AuthenticatedClient,
-    body: LoginInfo,
-) -> Response[UserSelf]:
+    reveal_secret: Union[Unset, str] = UNSET,
+) -> Response[UserProfile]:
     """
     Args:
-        body (LoginInfo):
+        username (str):
+        reveal_secret (Union[Unset, str]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[UserSelf]
+        Response[UserProfile]
     """
 
     kwargs = _get_kwargs(
-        body=body,
+        username=username,
+        reveal_secret=reveal_secret,
     )
 
     response = await client.get_async_httpx_client().request(**kwargs)
@@ -128,25 +136,28 @@ async def asyncio_detailed(
 
 
 async def asyncio(
+    username: str,
     *,
     client: AuthenticatedClient,
-    body: LoginInfo,
-) -> Optional[UserSelf]:
+    reveal_secret: Union[Unset, str] = UNSET,
+) -> Optional[UserProfile]:
     """
     Args:
-        body (LoginInfo):
+        username (str):
+        reveal_secret (Union[Unset, str]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        UserSelf
+        UserProfile
     """
 
     return (
         await asyncio_detailed(
+            username=username,
             client=client,
-            body=body,
+            reveal_secret=reveal_secret,
         )
     ).parsed

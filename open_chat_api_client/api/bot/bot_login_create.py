@@ -18,7 +18,7 @@ def _get_kwargs(
 
     _kwargs: Dict[str, Any] = {
         "method": "post",
-        "url": "/api/bot/login",
+        "url": "/api/bot/login/",
     }
 
     _body = body.to_dict()

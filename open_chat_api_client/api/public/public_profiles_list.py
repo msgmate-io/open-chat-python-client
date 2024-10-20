@@ -24,7 +24,7 @@ def _get_kwargs(
 
     _kwargs: Dict[str, Any] = {
         "method": "get",
-        "url": "/api/public/profiles",
+        "url": "/api/public/profiles/",
         "params": params,
     }
 

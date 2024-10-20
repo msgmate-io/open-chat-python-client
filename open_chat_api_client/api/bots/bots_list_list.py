@@ -5,34 +5,37 @@ import httpx
 
 from ... import errors
 from ...client import AuthenticatedClient, Client
-from ...models.login_info import LoginInfo
-from ...models.user_self import UserSelf
-from ...types import Response
+from ...models.paginated_bots_control_list import PaginatedBotsControlList
+from ...types import UNSET, Response, Unset
 
 
 def _get_kwargs(
     *,
-    body: LoginInfo,
+    page: Union[Unset, int] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
 ) -> Dict[str, Any]:
-    headers: Dict[str, Any] = {}
+    params: Dict[str, Any] = {}
+
+    params["page"] = page
+
+    params["page_size"] = page_size
+
+    params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
     _kwargs: Dict[str, Any] = {
-        "method": "post",
-        "url": "/api/user/login/",
+        "method": "get",
+        "url": "/api/bots/list/",
+        "params": params,
     }
 
-    _body = body.to_dict()
-
-    _kwargs["json"] = _body
-    headers["Content-Type"] = "application/json"
-
-    _kwargs["headers"] = headers
     return _kwargs
 
 
-def _parse_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Optional[UserSelf]:
+def _parse_response(
+    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
+) -> Optional[PaginatedBotsControlList]:
     if response.status_code == HTTPStatus.OK:
-        response_200 = UserSelf.from_dict(response.json())
+        response_200 = PaginatedBotsControlList.from_dict(response.json())
 
         return response_200
     if client.raise_on_unexpected_status:
@@ -41,7 +44,9 @@ def _parse_response(*, client: Union[AuthenticatedClient, Client], response: htt
         return None
 
 
-def _build_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Response[UserSelf]:
+def _build_response(
+    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
+) -> Response[PaginatedBotsControlList]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -53,22 +58,25 @@ def _build_response(*, client: Union[AuthenticatedClient, Client], response: htt
 def sync_detailed(
     *,
     client: AuthenticatedClient,
-    body: LoginInfo,
-) -> Response[UserSelf]:
+    page: Union[Unset, int] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+) -> Response[PaginatedBotsControlList]:
     """
     Args:
-        body (LoginInfo):
+        page (Union[Unset, int]):
+        page_size (Union[Unset, int]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[UserSelf]
+        Response[PaginatedBotsControlList]
     """
 
     kwargs = _get_kwargs(
-        body=body,
+        page=page,
+        page_size=page_size,
     )
 
     response = client.get_httpx_client().request(
@@ -81,45 +89,51 @@ def sync_detailed(
 def sync(
     *,
     client: AuthenticatedClient,
-    body: LoginInfo,
-) -> Optional[UserSelf]:
+    page: Union[Unset, int] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+) -> Optional[PaginatedBotsControlList]:
     """
     Args:
-        body (LoginInfo):
+        page (Union[Unset, int]):
+        page_size (Union[Unset, int]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        UserSelf
+        PaginatedBotsControlList
     """
 
     return sync_detailed(
         client=client,
-        body=body,
+        page=page,
+        page_size=page_size,
     ).parsed
 
 
 async def asyncio_detailed(
     *,
     client: AuthenticatedClient,
-    body: LoginInfo,
-) -> Response[UserSelf]:
+    page: Union[Unset, int] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+) -> Response[PaginatedBotsControlList]:
     """
     Args:
-        body (LoginInfo):
+        page (Union[Unset, int]):
+        page_size (Union[Unset, int]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[UserSelf]
+        Response[PaginatedBotsControlList]
     """
 
     kwargs = _get_kwargs(
-        body=body,
+        page=page,
+        page_size=page_size,
     )
 
     response = await client.get_async_httpx_client().request(**kwargs)
@@ -130,23 +144,26 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: AuthenticatedClient,
-    body: LoginInfo,
-) -> Optional[UserSelf]:
+    page: Union[Unset, int] = UNSET,
+    page_size: Union[Unset, int] = UNSET,
+) -> Optional[PaginatedBotsControlList]:
     """
     Args:
-        body (LoginInfo):
+        page (Union[Unset, int]):
+        page_size (Union[Unset, int]):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        UserSelf
+        PaginatedBotsControlList
     """
 
     return (
         await asyncio_detailed(
             client=client,
-            body=body,
+            page=page,
+            page_size=page_size,
         )
     ).parsed

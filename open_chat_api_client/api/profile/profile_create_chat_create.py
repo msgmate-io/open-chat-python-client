@@ -6,14 +6,14 @@ import httpx
 from ... import errors
 from ...client import AuthenticatedClient, Client
 from ...models.chat_creation_response import ChatCreationResponse
-from ...models.send_message import SendMessage
+from ...models.create_chat import CreateChat
 from ...types import UNSET, Response, Unset
 
 
 def _get_kwargs(
     user_uuid: str,
     *,
-    body: SendMessage,
+    body: CreateChat,
     contact_secret: Union[Unset, str] = UNSET,
     reveal_secret: Union[Unset, str] = UNSET,
 ) -> Dict[str, Any]:
@@ -29,7 +29,7 @@ def _get_kwargs(
 
     _kwargs: Dict[str, Any] = {
         "method": "post",
-        "url": f"/api/profile/{user_uuid}/create_chat",
+        "url": f"/api/profile/{user_uuid}/create_chat/",
         "params": params,
     }
 
@@ -70,7 +70,7 @@ def sync_detailed(
     user_uuid: str,
     *,
     client: AuthenticatedClient,
-    body: SendMessage,
+    body: CreateChat,
     contact_secret: Union[Unset, str] = UNSET,
     reveal_secret: Union[Unset, str] = UNSET,
 ) -> Response[ChatCreationResponse]:
@@ -79,7 +79,7 @@ def sync_detailed(
         user_uuid (str):
         contact_secret (Union[Unset, str]):
         reveal_secret (Union[Unset, str]):
-        body (SendMessage):
+        body (CreateChat):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -107,7 +107,7 @@ def sync(
     user_uuid: str,
     *,
     client: AuthenticatedClient,
-    body: SendMessage,
+    body: CreateChat,
     contact_secret: Union[Unset, str] = UNSET,
     reveal_secret: Union[Unset, str] = UNSET,
 ) -> Optional[ChatCreationResponse]:
@@ -116,7 +116,7 @@ def sync(
         user_uuid (str):
         contact_secret (Union[Unset, str]):
         reveal_secret (Union[Unset, str]):
-        body (SendMessage):
+        body (CreateChat):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -139,7 +139,7 @@ async def asyncio_detailed(
     user_uuid: str,
     *,
     client: AuthenticatedClient,
-    body: SendMessage,
+    body: CreateChat,
     contact_secret: Union[Unset, str] = UNSET,
     reveal_secret: Union[Unset, str] = UNSET,
 ) -> Response[ChatCreationResponse]:
@@ -148,7 +148,7 @@ async def asyncio_detailed(
         user_uuid (str):
         contact_secret (Union[Unset, str]):
         reveal_secret (Union[Unset, str]):
-        body (SendMessage):
+        body (CreateChat):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -174,7 +174,7 @@ async def asyncio(
     user_uuid: str,
     *,
     client: AuthenticatedClient,
-    body: SendMessage,
+    body: CreateChat,
     contact_secret: Union[Unset, str] = UNSET,
     reveal_secret: Union[Unset, str] = UNSET,
 ) -> Optional[ChatCreationResponse]:
@@ -183,7 +183,7 @@ async def asyncio(
         user_uuid (str):
         contact_secret (Union[Unset, str]):
         reveal_secret (Union[Unset, str]):
-        body (SendMessage):
+        body (CreateChat):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
